@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>アニメーター「線割り」中割り体験</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light;
+--bg:#f6f4ef;--fg:#222;--card:#fff;--mute:#777;--line:#e3e0d8;--acc:#e5484d;--red:#e5484d;--cyan:#1fb6d4;--grn:#16a05a}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#17181b;--fg:#eee;--card:#222428;--mute:#999;--line:#33363c;--red:#ff7b7f;--cyan:#5fd8f0;--grn:#3fcf8e}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#17181b;--fg:#eee;--card:#222428;--mute:#999;--line:#33363c;--red:#ff7b7f;--cyan:#5fd8f0;--grn:#3fcf8e}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg);font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif}
+main{max-width:460px;margin:0 auto;padding:14px}
+h1{font-size:26px;line-height:1.2;margin:18px 0 6px;letter-spacing:.04em}
+h1 small{display:block;font-size:13px;color:var(--mute);letter-spacing:.1em;font-weight:400}
+p{margin:6px 0;line-height:1.6}
+.mute{color:var(--mute);font-size:13px}
+.hide{display:none!important}
+button{font:inherit;border-radius:10px;padding:12px 16px;background:var(--card);color:var(--fg);border:1px solid var(--line);cursor:pointer}
+button.pri{background:var(--acc);color:#fff;border-color:var(--acc);font-weight:700}
+button.on{outline:2px solid var(--acc)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.row>button{flex:1}
+.col{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.col button{display:flex;justify-content:space-between;align-items:center;text-align:left}
+.col button span{font-size:12px;color:var(--mute)}
+.hud{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.hud b{font-size:22px;font-variant-numeric:tabular-nums}
+.hud span{font-size:11px;color:var(--mute);display:block}
+canvas{display:block;width:100%;aspect-ratio:1;border-radius:12px;border:1px solid var(--line);touch-action:none;background:var(--card)}
+.tc{display:flex;align-items:center;gap:8px;margin:12px 0 8px;font-weight:700}
+.tc i{position:relative;flex:1;height:2px;background:var(--mute)}
+.tc i b{position:absolute;top:-11px;transform:translateX(-50%);width:22px;height:22px;border-radius:50%;background:var(--grn);color:#fff;font-size:13px;text-align:center;line-height:22px}
+.fb{min-height:44px;text-align:center;font-size:20px;font-weight:700;margin:8px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0}
+</style>
+</head>
+<body>
+<main>
+<section id="title">
+  <h1><small>アニメ動画 中割りトレーニング</small>アニメーター「線割り」中割り体験</h1>
+  <p>赤い線（A）と水色の線（B）の「間」の線を描く練習です。描いたあとに「採点」ボタンで採点します。時間制限はありません。</p>
+  <div class="card">
+    <p class="mute">レベル</p>
+    <div class="col" id="levels">
+      <button data-l="e" class="on"><b>初級</b><span>直線・簡単な曲線</span></button>
+      <button data-l="m"><b>中級</b><span>曲線・角のある線</span></button>
+      <button data-l="h"><b>上級</b><span>2本つながった線</span></button>
+    </div>
+    <p class="mute">割る位置</p>
+    <div class="row" id="ratios">
+      <button data-r="half" class="on">真ん中（1:1）</button>
+      <button data-r="rand">ランダム</button>
+    </div>
+  </div>
+  <div class="row"><button class="pri" id="go">はじめる</button></div>
+  <p class="mute">赤と水色の⭐は、どちらも線の同じ側の端についています。⭐の側から描き始めると、線の向きで迷いません。緑の●が割る位置です。</p>
+</section>
+
+<section id="game" class="hide">
+  <div class="hud">
+    <button id="back">‹ もどる</button>
+    <div><span>今回の点</span><b id="score">0</b></div>
+    <div><span>平均点</span><b id="avg">-</b></div>
+    <div><span>挑戦した数</span><b id="qn">0</b></div>
+  </div>
+  <div class="tc"><span style="color:var(--red)">A</span><i><b id="mark">?</b></i><span style="color:var(--cyan)">B</span><span class="mute" id="ratio"></span></div>
+  <canvas id="cv"></canvas>
+  <p class="mute" style="text-align:center" id="help">赤(A)と水色(B)の間の線を、⭐の側から描こう</p>
+  <div class="fb" id="fb"></div>
+  <div class="row">
+    <button id="hint">ヒント</button>
+    <button id="undo">1本消す</button>
+    <button id="retry">全部消す</button>
+  </div>
+  <div class="row">
+    <button class="pri" id="grade">採点</button>
+    <button id="nextQ">次の問題</button>
+  </div>
+</section>
+</main>
+
+<script>
+const W=400,H=400;
+const $=id=>document.getElementById(id);
+const cv=$('cv'),ctx=cv.getContext('2d');
+(function(){const d=window.devicePixelRatio||1;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0)})();
+const C=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const R=(a,b)=>a+Math.random()*(b-a);
+const lerp=(a,b,t)=>a+(b-a)*t;
+const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+const TS=[[1/2,'1:1'],[1/3,'1:2'],[2/3,'2:1'],[1/4,'1:3'],[3/4,'3:1']];
+const LV={e:'初級',m:'中級',h:'上級'};
+const HELP={e:'赤(A)と水色(B)の間の線を、⭐の側から描こう',m:'赤(A)と水色(B)の間の線を、⭐の側から描こう。角も忘れずに',h:'つながった線。続けて描いても、2本に分けて描いてもOK（⭐の側から）'};
+let level='e',ratio='half',q,strokes=[],cur=null,show=false,scored=false,hint=false,best=0,sum=0,qn=0,drawing=false;
+
+// 3次ベジェ。1本の線は「セグメント」（制御点4つ）の並びで表す
+function bz(P,t){const u=1-t,a=u*u*u,b=3*u*u*t,c=3*u*t*t,d=t*t*t;
+  return{x:a*P[0].x+b*P[1].x+c*P[2].x+d*P[3].x,y:a*P[0].y+b*P[1].y+c*P[2].y+d*P[3].y}}
+const samp=(segs,n=24)=>segs.flatMap(P=>Array.from({length:n},(_,i)=>bz(P,i/(n-1))));
+function build(p0,ang,specs){
+  let p=p0,h=ang;const out=[];
+  for(const s of specs){
+    h+=s.turn;const d={x:Math.cos(h),y:Math.sin(h)},nm={x:-d.y,y:d.x};
+    const p3={x:p.x+d.x*s.len,y:p.y+d.y*s.len},q0=p;
+    const o1=s.kind==='line'?0:s.k,o2=s.kind==='line'?0:s.kind==='s'?(s.k2!==undefined?s.k2:-s.k):s.k;
+    const at=(t,o)=>({x:lerp(q0.x,p3.x,t)+nm.x*o,y:lerp(q0.y,p3.y,t)+nm.y*o});
+    out.push([q0,at(1/3,o1),at(2/3,o2),p3]);p=p3;
+  }
+  return out;
+}
+const sg=()=>Math.random()<.5?1:-1;
+function spec(){
+  if(level==='e')return[{len:R(190,270),turn:0,kind:Math.random()<.4?'line':'curve',k:sg()*R(20,50)}];
+  if(level==='m'){
+    if(Math.random()<.4)return[{len:R(190,270),turn:0,kind:'s',k:sg()*R(25,55)}];
+    const n=3+(Math.random()<.4?1:0),a=[];let s=sg();
+    for(let i=0;i<n;i++){a.push({len:R(65,100),turn:i?s*R(.8,1.7):0,kind:'line',k:0});s=-s}
+    return a;
+  }
+  const kinds=['line','curve','s'];
+  return[0,1].map(i=>({len:R(80,115),turn:i?sg()*R(.5,1.3):0,kind:kinds[Math.random()*3|0],k:sg()*R(20,45)}));
+}
+const inside=segs=>samp(segs,12).every(p=>p.x>14&&p.x<W-14&&p.y>14&&p.y<H-14);
+function gen(){
+  for(let i=0;i<1500;i++){
+    const [t,tl]=ratio==='half'?TS[0]:TS[Math.random()*5|0];
+    const sp=spec(),ang=R(0,Math.PI*2),p0={x:R(40,360),y:R(40,360)};
+    const A=build(p0,ang,sp);
+    const mid=level==='m',adv=level==='h';
+    const spB=sp.map(s=>mid?{...s,len:s.len*R(.7,1.3),turn:s.turn?s.turn+sg()*R(.25,.55):0,k:s.k*R(.4,1.6),k2:(s.k2!==undefined?s.k2:-s.k)*R(.4,1.6)}:{...s,len:s.len*R(.85,1.15),turn:s.turn*R(.8,1.2),k:s.k*R(.5,1.4)});
+    const off=adv?R(90,140):0,oa=R(0,Math.PI*2);
+    const B=build(adv?{x:p0.x+off*Math.cos(oa),y:p0.y+off*Math.sin(oa)}:{x:p0.x+R(-40,40),y:p0.y+R(-35,35)},ang+R(.2,.55)*sg(),spB);
+    if(!inside(A)||!inside(B))continue;
+    const M=A.map((P,i)=>P.map((a,j)=>({x:lerp(a.x,B[i][j].x,t),y:lerp(a.y,B[i][j].y,t)})));
+    return{t,tl,A,B,M};
+  }
+  return gen();
+}
+
+function path(pts,col,w,alpha,dash){
+  ctx.save();ctx.strokeStyle=col;ctx.lineWidth=w;ctx.lineCap='round';ctx.lineJoin='round';ctx.globalAlpha=alpha||1;
+  if(dash)ctx.setLineDash(dash);
+  ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();ctx.restore();
+}
+function star(p){ctx.save();ctx.font='20px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('⭐',p.x,p.y);ctx.restore()}
+function redraw(){
+  ctx.clearRect(0,0,W,H);ctx.fillStyle=C('--card');ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle=C('--line');ctx.lineWidth=1;ctx.beginPath();
+  for(let i=40;i<W;i+=40){ctx.moveTo(i,0);ctx.lineTo(i,H);ctx.moveTo(0,i);ctx.lineTo(W,i)}
+  ctx.stroke();
+  const a=samp(q.A),b=samp(q.B),m=samp(q.M);
+  if(hint){
+    for(const f of[0,.25,.5,.75,1]){
+      const i=Math.floor(f*(a.length-1));
+      path([a[i],b[i]],C('--mute'),1.2,.8,[4,5]);
+      ctx.fillStyle=C('--grn');ctx.beginPath();ctx.arc(m[i].x,m[i].y,3.5,0,7);ctx.fill();
+    }
+  }
+  path(a,C('--red'),3.5,.9);path(b,C('--cyan'),3.5,.9);
+  if(show)path(m,C('--grn'),3.5,1);
+  star(a[0]);star(b[0]);if(show)star(m[0]);
+  for(const s of strokes)if(s.length>1)path(s,C('--fg'),2.5,1);
+}
+
+function score(){
+  let len=0;for(const s of strokes)for(let i=1;i<s.length;i++)len+=dist(s[i],s[i-1]);
+  if(len<40)return null;
+  const u=[];
+  for(const s of strokes)for(let i=1;i<s.length;i++){
+    const a=s[i-1],b=s[i],n=Math.max(1,Math.ceil(dist(a,b)/3));
+    for(let j=0;j<n;j++)u.push({x:lerp(a.x,b.x,j/n),y:lerp(a.y,b.y,j/n)});
+  }
+  const m=samp(q.M,50);
+  const near=(p,arr)=>{let d=1e12;for(const r of arr){const e=(p.x-r.x)**2+(p.y-r.y)**2;if(e<d)d=e}return Math.sqrt(d)};
+  let x=0,y=0;for(const p of m)x+=near(p,u);for(const p of u)y+=near(p,m);
+  const err=(x/m.length+y/u.length)/2;
+  return Math.round(100*Math.exp(-err/16));
+}
+const comment=s=>s>=90?'お見事！ほぼ正解の位置です':s>=75?'いい感じに間が取れています':s>=50?'惜しい！もう一度見直してみよう':'ずいぶん外れました。⭐の位置から確認しよう';
+
+function next(){
+  if(best>0){sum+=best;qn++}
+  q=gen();strokes=[];cur=null;show=false;scored=false;best=0;
+  $('mark').style.left=(q.t*100)+'%';$('ratio').textContent=LV[level]+' ／ A→B '+q.tl;
+  $('help').textContent=HELP[level];
+  $('fb').textContent='';$('score').textContent=0;
+  $('avg').textContent=qn?Math.round(sum/qn):'-';$('qn').textContent=qn;
+  redraw();
+}
+function pt(e){const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height}}
+cv.addEventListener('pointerdown',e=>{
+  e.preventDefault();cv.setPointerCapture(e.pointerId);
+  if(scored){strokes=[];scored=false;show=false;$('fb').textContent=''}
+  drawing=true;cur=[pt(e)];strokes.push(cur);redraw();
+});
+cv.addEventListener('pointermove',e=>{if(!drawing)return;cur.push(pt(e));redraw()});
+function up(){
+  if(!drawing)return;drawing=false;
+  if(cur.length<3)strokes.pop();
+  cur=null;redraw();
+}
+cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+
+$('grade').onclick=()=>{
+  if(drawing)return;
+  const s=score();
+  if(s===null){$('fb').textContent='線を描いてから採点してね';return}
+  show=true;scored=true;best=Math.max(best,s);
+  $('score').textContent=best;$('fb').textContent=s+'点　'+comment(s);redraw();
+};
+$('undo').onclick=()=>{strokes.pop();show=false;scored=false;$('fb').textContent='';redraw()};
+$('retry').onclick=()=>{strokes=[];show=false;scored=false;$('fb').textContent='';redraw()};
+$('nextQ').onclick=next;
+$('hint').onclick=()=>{hint=!hint;$('hint').classList.toggle('on',hint);redraw()};
+
+function pick(box,attr,cb){$(box).addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;cb(b.dataset[attr]);
+  [...$(box).children].forEach(x=>x.classList.toggle('on',x===b));
+})}
+pick('levels','l',v=>level=v);pick('ratios','r',v=>ratio=v);
+$('go').onclick=()=>{sum=0;qn=0;best=0;$('title').classList.add('hide');$('game').classList.remove('hide');next()};
+$('back').onclick=()=>{$('game').classList.add('hide');$('title').classList.remove('hide')};
+</script>
+</body>
+</html>
