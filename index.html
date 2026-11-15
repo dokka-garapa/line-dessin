@@ -19,8 +19,10 @@ h1 small{display:block;font-size:13px;color:var(--mute);letter-spacing:.1em;font
 p{margin:6px 0;line-height:1.6}
 .mute{color:var(--mute);font-size:13px}
 .hide{display:none!important}
-.top{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:6px;direction:ltr}
-.top button{flex:none;padding:6px 12px;font-size:13px;border-radius:999px}
+.top{display:flex;justify-content:flex-end;flex-wrap:nowrap;gap:5px;direction:ltr}
+.top button{flex:1 1 0;min-width:0;padding:7px 4px;font-size:0;border-radius:999px;text-align:center;line-height:1.3;white-space:nowrap}
+.top button::after{content:attr(data-s);font-size:13px}
+@media(max-width:380px){.top{gap:4px}.top button{padding:7px 2px}.top button::after{font-size:12px}}
 .top button.on{background:var(--acc);color:#fff;border-color:var(--acc);font-weight:700}
 button{font:inherit;border-radius:10px;padding:12px 16px;background:var(--card);color:var(--fg);border:1px solid var(--line);cursor:pointer}
 button.pri{background:var(--acc);color:#fff;border-color:var(--acc);font-weight:700}
@@ -38,18 +40,34 @@ button.on{outline:2px solid var(--acc)}
 .hud{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
 .hud b{font-size:22px;font-variant-numeric:tabular-nums}
 .hud span{font-size:11px;color:var(--mute);display:block}
-canvas{display:block;margin:0 auto;width:min(100%,max(240px,calc(100vh - 380px)));width:min(100%,max(240px,calc(100dvh - 380px)));aspect-ratio:1;border-radius:12px;border:1px solid var(--line);touch-action:none;background:var(--card)}
+canvas{display:block;margin:0 auto;width:min(100%,max(240px,calc(100vh - 380px)));width:min(100%,max(240px,calc(100dvh - 380px)));aspect-ratio:5/4;border-radius:12px;border:1px solid var(--line);touch-action:none;background:var(--card)}
 .tc{display:flex;align-items:center;gap:8px;margin:12px 0 8px;font-weight:700;direction:ltr}
 .tc .mute{direction:ltr;unicode-bidi:plaintext}
 .tc i{position:relative;flex:1;height:2px;background:var(--mute)}
 .tc i b{position:absolute;top:-11px;transform:translateX(-50%);width:22px;height:22px;border-radius:50%;background:var(--grn);color:#fff;font-size:13px;text-align:center;line-height:22px}
-.fb{min-height:44px;text-align:center;font-size:20px;font-weight:700;margin:8px 0}
+.fb{min-height:44px;text-align:center;font-size:17px;font-weight:700;margin:8px 0}
+.fb:empty{min-height:0;margin:0}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0}
+.rvt{font-size:17px;font-weight:700;margin:0 0 2px}
+.rvc{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left}
+.rvc .mute{margin:2px 0 0}
+.rvc .big{flex:none;text-align:right}
+html[lang="fr"] body{font-size:15px}
+html[lang="fr"] h1{font-size:23px}
+html[lang="fr"] h1 small{font-size:12px}
+html[lang="fr"] .mute{font-size:12px}
+html[lang="fr"] .fb{font-size:15px}
+html[lang="fr"] .big{font-size:36px}
+html[lang="fr"] .hud b{font-size:20px}
+html[lang="fr"] .hud span{font-size:10px}
+html[lang="fr"] .col button span{font-size:11px}
+html[lang="fr"] .chips span{font-size:11px}
+html[lang="fr"] .rvt{font-size:16px}
 </style>
 </head>
 <body>
 <main>
-<div class="top" id="lang" role="group" aria-label="Language"><button type="button" data-l="ja" lang="ja">日本語</button><button type="button" data-l="en" lang="en">English</button><button type="button" data-l="ko" lang="ko">한국어</button><button type="button" data-l="zh" lang="zh">中文</button><button type="button" data-l="fr" lang="fr">Français</button><button type="button" data-l="es" lang="es">Español</button><button type="button" data-l="ar" lang="ar">العربية</button></div>
+<div class="top" id="lang" role="group" aria-label="Language"><button type="button" data-l="ja" data-s="日" lang="ja">日本語</button><button type="button" data-l="en" data-s="EN" lang="en">English</button><button type="button" data-l="ko" data-s="한" lang="ko">한국어</button><button type="button" data-l="zh" data-s="中" lang="zh">中文</button><button type="button" data-l="fr" data-s="FR" lang="fr">Français</button><button type="button" data-l="es" data-s="ES" lang="es">Español</button><button type="button" data-l="ar" data-s="ع" lang="ar">العربية</button><button type="button" data-l="th" data-s="ไทย" lang="th">ภาษาไทย</button></div>
 <section id="title">
   <h1><small data-t="sub">アニメ動画 中割りトレーニング</small><span data-t="title">アニメーター「線割り」ゲーム・中割り体験</span></h1>
   <p data-t="intro">赤い線（A）と水色の線（B）の「間」の線を描く練習です。描いたあとに「採点」ボタンで採点します。時間制限はありません。5問ずつ出題されます。振り返りではアニメーションとして確認できます。</p>
@@ -92,19 +110,17 @@ canvas{display:block;margin:0 auto;width:min(100%,max(240px,calc(100vh - 380px))
   </div>
 </section>
 <section id="review" class="hide">
-  <h1><span data-t="rv_title">まとめ（5問の振り返り）</span></h1>
-  <div class="card" style="text-align:center"><p class="mute" data-t="rv_avg">5問の平均点</p><div class="big" id="ravg">0</div></div>
+  <div class="card rvc"><div class="rvl"><div class="rvt" data-t="rv_title">まとめ（5問の振り返り）</div><p class="mute" data-t="rv_avg">5問の平均点</p></div><div class="big" id="ravg">0</div></div>
   <canvas id="rv"></canvas>
   <p class="mute" style="text-align:center" data-t="rv_leg">赤=A　水色=B　黒=あなたの線　緑の点線=正解</p>
   <div class="row"><button class="pri" id="rplay" data-t="play">再生</button></div>
   <div class="chips" id="chips"></div>
-  <p class="mute" data-t="rv_hint">番号を選ぶと、その問題を見返せます。「再生」で、赤 → あなたの線 → 水色 → あなたの線 → 赤 を、24fps・3フレームずつで確認できます。</p>
   <div class="row"><button id="again" data-t="again">もう一度挑戦</button><button id="totitle" data-t="totitle">タイトルへ</button></div>
 </section>
 </main>
 
 <script>
-const W=400,H=400,NQ=5;   // 何問ごとに振り返りを出すか
+const W=400,H=320,NQ=5;   // 描画スペースは横長（400×320）。何問ごとに振り返りを出すか
 const $=id=>document.getElementById(id);
 const cv=$('cv'),rv=$('rv');let ctx=cv.getContext('2d');const rctx=rv.getContext('2d');
 (function(){const d=window.devicePixelRatio||1;for(const [c,x] of [[cv,ctx],[rv,rctx]]){c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0)}})();
@@ -124,7 +140,6 @@ help_e:'赤(A)と水色(B)の間の線を描こう',help_m:'赤(A)と水色(B)�
 hint:'ヒント',undo:'1本消す',retry:'全部消す',grade:'採点',next:'次の問題',
 need:'線を描いてから採点してね',pts:'点　',results:'まとめを見る',play:'再生',stop:'停止',again:'もう一度挑戦',totitle:'タイトルへ',
 rv_title:'まとめ（5問の振り返り）',rv_avg:'5問の平均点',rv_leg:'赤=A　水色=B　黒=あなたの線　緑の点線=正解',
-rv_hint:'番号を選ぶと、その問題を見返せます。「再生」で、赤 → あなたの線 → 水色 → あなたの線 → 赤 を、24fps・3フレームずつで確認できます。',
 c90:'お見事！ほぼ正解の位置です',c75:'いい感じに間が取れています',c50:'惜しい！もう一度見直してみよう',c0:'ずいぶん外れました。線の位置を見直してみよう'},
 en:{title:'Animator "Line-Splitting" Game · Inbetweening Experience',sub:'Anime Inbetweening Training',
 intro:'Practice drawing the line that lies between the red line (A) and the light-blue line (B). Draw it, then press "Grade" to get your score. There is no time limit. Questions come in sets of 5. In the review, you can check your work as an animation.',
@@ -136,7 +151,6 @@ help_e:'Draw the line between red (A) and light-blue (B).',help_m:'Draw the line
 hint:'Hint',undo:'Undo stroke',retry:'Clear all',grade:'Grade',next:'Next',
 need:'Draw a line first, then grade.',pts:' pts  ',results:'See review',play:'Play',stop:'Stop',again:'Play again',totitle:'Title',
 rv_title:'Review of 5 questions',rv_avg:'Average of 5 questions',rv_leg:'Red = A, Light blue = B, Black = your line, Green dashed = answer',
-rv_hint:'Choose a number to review that question. Press Play to watch red → your line → light blue → your line → red at 24 fps, 3 frames each.',
 c90:'Excellent! Almost exactly right.',c75:'Nice, good spacing.',c50:'Close! Take another look.',c0:'Far off. Check the position of the line again.'},
 ko:{title:'애니메이터 "선 나누기" 게임 · 인비트윈 체험',sub:'애니메이션 인비트윈 트레이닝',
 intro:'빨간 선(A)과 하늘색 선(B)의 "사이" 선을 그리는 연습입니다. 그린 뒤 "채점" 버튼으로 점수를 확인하세요. 시간 제한은 없습니다. 5문제씩 출제됩니다. 돌아보기에서는 애니메이션으로 확인할 수 있습니다.',
@@ -148,7 +162,6 @@ help_e:'빨강(A)과 하늘색(B) 사이의 선을 그려 보세요',help_m:'빨
 hint:'힌트',undo:'한 획 지우기',retry:'모두 지우기',grade:'채점',next:'다음 문제',
 need:'선을 그린 뒤에 채점해 주세요',pts:'점  ',results:'결과 보기',play:'재생',stop:'정지',again:'다시 도전',totitle:'타이틀로',
 rv_title:'정리 (5문제 돌아보기)',rv_avg:'5문제 평균 점수',rv_leg:'빨강=A  하늘색=B  검정=내 선  초록 점선=정답',
-rv_hint:'번호를 선택하면 해당 문제를 다시 볼 수 있습니다. "재생"을 누르면 빨강 → 내 선 → 하늘색 → 내 선 → 빨강 순으로 24fps, 3프레임씩 확인할 수 있습니다.',
 c90:'훌륭해요! 거의 정확한 위치예요',c75:'사이를 잘 잡았어요',c50:'아깝네요! 다시 한번 살펴보세요',c0:'많이 벗어났어요. 선의 위치를 다시 확인해 보세요'},
 zh:{title:'动画师"分线"游戏 · 中间画体验',sub:'动画 中间画训练',
 intro:'练习画出红线（A）与浅蓝线（B）"之间"的线。画完后按"评分"按钮打分。没有时间限制。每组出 5 道题。在回顾中可以以动画形式查看。',
@@ -160,7 +173,6 @@ help_e:'画出红(A)与浅蓝(B)之间的线',help_m:'画出红(A)与浅蓝(B)�
 hint:'提示',undo:'擦掉一笔',retry:'全部擦掉',grade:'评分',next:'下一题',
 need:'请先画线再评分',pts:'分  ',results:'查看总结',play:'播放',stop:'停止',again:'再挑战一次',totitle:'回到标题',
 rv_title:'总结（5题回顾）',rv_avg:'5题平均分',rv_leg:'红=A　浅蓝=B　黑=你的线　绿色虚线=正确答案',
-rv_hint:'选择编号即可回看该题。点击"播放"，可以以 24fps、每个 3 帧的速度查看 红 → 你的线 → 浅蓝 → 你的线 → 红。',
 c90:'太棒了！几乎完全正确',c75:'间隔把握得不错',c50:'可惜！再看一看吧',c0:'偏差较大，再检查一下线的位置吧'},
 fr:{title:'Jeu de l’animateur « Découpe de ligne » · Découverte de l’intercalation',sub:'Entraînement à l’intercalation en animation',
 intro:'Entraînez-vous à tracer la ligne située entre la ligne rouge (A) et la ligne bleu clair (B). Une fois tracée, appuyez sur « Noter » pour obtenir votre score. Il n’y a pas de limite de temps. Les questions sont proposées par séries de 5. Dans le bilan, vous pouvez vérifier votre travail sous forme d’animation.',
@@ -172,7 +184,6 @@ help_e:'Tracez la ligne entre le rouge (A) et le bleu clair (B).',help_m:'Tracez
 hint:'Indice',undo:'Effacer un trait',retry:'Tout effacer',grade:'Noter',next:'Suivant',
 need:'Tracez d’abord une ligne, puis notez.',pts:' pts  ',results:'Voir le bilan',play:'Lire',stop:'Arrêter',again:'Rejouer',totitle:'Titre',
 rv_title:'Bilan des 5 questions',rv_avg:'Moyenne des 5 questions',rv_leg:'Rouge = A, Bleu clair = B, Noir = votre ligne, Pointillés verts = réponse',
-rv_hint:'Choisissez un numéro pour revoir cette question. Appuyez sur Lire pour voir rouge → votre ligne → bleu clair → votre ligne → rouge à 24 i/s, 3 images chacun.',
 c90:'Excellent ! Presque exact.',c75:'Bien, bon espacement.',c50:'Presque ! Regardez encore.',c0:'Très éloigné. Revérifiez la position de la ligne.'},
 es:{title:'Juego del animador «División de línea» · Experiencia de intercalación',sub:'Entrenamiento de intercalación en animación',
 intro:'Practica dibujando la línea que queda entre la línea roja (A) y la línea azul claro (B). Dibújala y pulsa «Calificar» para ver tu puntuación. No hay límite de tiempo. Las preguntas vienen en series de 5. En el repaso puedes comprobar tu trabajo como animación.',
@@ -184,7 +195,6 @@ help_e:'Dibuja la línea entre el rojo (A) y el azul claro (B).',help_m:'Dibuja 
 hint:'Pista',undo:'Borrar un trazo',retry:'Borrar todo',grade:'Calificar',next:'Siguiente',
 need:'Dibuja una línea primero y luego califica.',pts:' pts  ',results:'Ver repaso',play:'Reproducir',stop:'Detener',again:'Jugar de nuevo',totitle:'Título',
 rv_title:'Repaso de las 5 preguntas',rv_avg:'Promedio de las 5 preguntas',rv_leg:'Rojo = A, Azul claro = B, Negro = tu línea, Verde discontinuo = respuesta',
-rv_hint:'Elige un número para repasar esa pregunta. Pulsa Reproducir para ver rojo → tu línea → azul claro → tu línea → rojo a 24 fps, 3 fotogramas cada uno.',
 c90:'¡Excelente! Casi exacto.',c75:'Bien, buena separación.',c50:'¡Cerca! Échale otro vistazo.',c0:'Muy desviado. Revisa de nuevo la posición de la línea.'},
 ar:{title:'لعبة المحرّك «تقسيم الخطوط» · تجربة الرسم البيني',sub:'تدريب على الرسم البيني في الأنيميشن',
 intro:'تدرّب على رسم الخط الواقع بين الخط الأحمر (A) والخط الأزرق الفاتح (B). بعد الرسم اضغط «تقييم» للحصول على درجتك. لا يوجد حد زمني. تُعرض الأسئلة في مجموعات من 5. في المراجعة يمكنك التحقق من عملك على شكل أنيميشن.',
@@ -196,9 +206,19 @@ help_e:'ارسم الخط الواقع بين الأحمر (A) والأزرق ا
 hint:'تلميح',undo:'مسح ضربة',retry:'مسح الكل',grade:'تقييم',next:'التالي',
 need:'ارسم خطًا أولًا ثم قيّم.',pts:' نقطة  ',results:'عرض المراجعة',play:'تشغيل',stop:'إيقاف',again:'العب مجددًا',totitle:'العنوان',
 rv_title:'مراجعة الأسئلة الخمسة',rv_avg:'متوسط الأسئلة الخمسة',rv_leg:'أحمر = A، أزرق فاتح = B، أسود = خطك، أخضر متقطع = الإجابة',
-rv_hint:'اختر رقمًا لمراجعة ذلك السؤال. اضغط «تشغيل» لمشاهدة أحمر ← خطك ← أزرق فاتح ← خطك ← أحمر بسرعة 24 إطارًا في الثانية، 3 إطارات لكل منها.',
-c90:'ممتاز! الموضع شبه صحيح تمامًا',c75:'تقسيم جيد',c50:'قريب! أعد النظر مرة أخرى',c0:'بعيد جدًا. راجع موضع الخط مرة أخرى'}};
-const LANGATTR={ja:'ja',en:'en',ko:'ko',zh:'zh-Hans',fr:'fr',es:'es',ar:'ar'};
+c90:'ممتاز! الموضع شبه صحيح تمامًا',c75:'تقسيم جيد',c50:'قريب! أعد النظر مرة أخرى',c0:'بعيد جدًا. راجع موضع الخط مرة أخرى'},
+th:{title:'เกม "แบ่งเส้น" ของอนิเมเตอร์ · ประสบการณ์อินบีทวีน',sub:'ฝึกอินบีทวีนแอนิเมชัน',
+intro:'ฝึกวาดเส้นที่อยู่ "ระหว่าง" เส้นสีแดง (A) กับเส้นสีฟ้า (B) วาดเสร็จแล้วกดปุ่ม "ให้คะแนน" เพื่อตรวจคะแนน ไม่มีจำกัดเวลา ออกโจทย์ครั้งละ 5 ข้อ ในหน้าสรุปผลสามารถตรวจดูเป็นแอนิเมชันได้',
+lv:'ระดับ',lv_e:'ระดับต้น',lv_m:'ระดับกลาง',lv_h:'ระดับสูง',ld_e:'เส้นตรง·เส้นโค้งง่าย ๆ',ld_m:'เส้นโค้ง·เส้นที่มีมุม',ld_h:'เส้นที่เชื่อมกัน 2 เส้น',
+pos:'ตำแหน่งที่แบ่ง',half:'ตรงกลาง (1:1)',rand:'สุ่ม',go:'เริ่ม',
+note:'กดคำใบ้จะเห็นตำแหน่งที่แบ่งเป็น ● สีเขียว เมื่อให้คะแนนแล้ว เส้นที่ถูกต้องสีเขียวจะแสดงขึ้นมา',
+back:'‹ กลับ',h1:'คะแนนครั้งนี้',h2:'คะแนนเฉลี่ย',h3:'จำนวนที่ทำ',
+help_e:'วาดเส้นระหว่างสีแดง (A) กับสีฟ้า (B)',help_m:'วาดเส้นระหว่างสีแดง (A) กับสีฟ้า (B) อย่าลืมมุมด้วยนะ',help_h:'เส้นที่เชื่อมกัน จะวาดต่อเนื่องหรือแบ่งเป็น 2 เส้นก็ได้',
+hint:'คำใบ้',undo:'ลบ 1 เส้น',retry:'ลบทั้งหมด',grade:'ให้คะแนน',next:'ข้อต่อไป',
+need:'วาดเส้นก่อนแล้วค่อยให้คะแนนนะ',pts:' คะแนน  ',results:'ดูสรุปผล',play:'เล่น',stop:'หยุด',again:'ลองอีกครั้ง',totitle:'กลับหน้าแรก',
+rv_title:'สรุปผล (ทบทวน 5 ข้อ)',rv_avg:'คะแนนเฉลี่ยของ 5 ข้อ',rv_leg:'แดง = A　ฟ้า = B　ดำ = เส้นของคุณ　เขียวประ = คำตอบที่ถูกต้อง',
+c90:'ยอดเยี่ยม! ตำแหน่งเกือบถูกต้องเป๊ะเลย',c75:'ดีมาก แบ่งระยะได้ดี',c50:'น่าเสียดาย! ลองดูอีกครั้งนะ',c0:'เบี่ยงไปเยอะเลย ลองตรวจตำแหน่งของเส้นอีกครั้ง'}};
+const LANGATTR={ja:'ja',en:'en',ko:'ko',zh:'zh-Hans',fr:'fr',es:'es',ar:'ar',th:'th'};
 let lang=(()=>{try{const v=localStorage.getItem('lang');if(v&&I18N[v])return v}catch(e){}return'ja'})(),fbf=null;
 const t=k=>I18N[lang][k];
 const setFb=f=>{fbf=f;$('fb').textContent=f?f():''};
@@ -206,7 +226,7 @@ function applyLang(){
   document.documentElement.lang=LANGATTR[lang];document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.title=t('title');
   document.querySelectorAll('[data-t]').forEach(el=>el.textContent=t(el.dataset.t));
   document.querySelectorAll('#lang button').forEach(b=>{const on=b.dataset.l===lang;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
-  if(q){$('ratio').textContent=t('lv_'+level)+' ／ A→B '+q.tl;$('help').textContent=t('help_'+level)}
+  if(q){$('ratio').textContent=t('lv_'+level)+' ／ A→B '+q.tl;$('help').textContent=scored?'':t('help_'+level)}
   if(fbf)$('fb').textContent=fbf();
 }
 let level='e',ratio='half',q=null,strokes=[],cur=null,show=false,scored=false,hint=false,best=0,sum=0,qn=0,drawing=false,done=false,snap=[],recs=[];
@@ -242,7 +262,7 @@ const inside=segs=>samp(segs,12).every(p=>p.x>14&&p.x<W-14&&p.y>14&&p.y<H-14);
 function gen(){
   for(let i=0;i<1500;i++){
     const [t,tl]=ratio==='half'?TS[0]:TS[Math.random()*5|0];
-    const sp=spec(),ang=R(0,Math.PI*2),p0={x:R(40,360),y:R(40,360)};
+    const sp=spec(),ang=R(0,Math.PI*2),p0={x:R(40,360),y:R(40,H-40)};
     const A=build(p0,ang,sp);
     const mid=level==='m',adv=level==='h';
     const spB=sp.map(s=>mid?{...s,len:s.len*R(.7,1.3),turn:s.turn?s.turn+sg()*R(.25,.55):0,k:s.k*R(.4,1.6),k2:(s.k2!==undefined?s.k2:-s.k)*R(.4,1.6)}:{...s,len:s.len*R(.85,1.15),turn:s.turn*R(.8,1.2),k:s.k*R(.5,1.4)});
@@ -310,7 +330,7 @@ const isPlay=()=>document.documentElement.classList.contains('playing');
 let aid=null;
 function begin(id,x,y){
   if(drawing)return;
-  if(scored){strokes=[];scored=false;show=false;setFb(null)}
+  if(scored){strokes=[];scored=false;show=false;setFb(null);$('help').textContent=t('help_'+level)}
   aid=id;drawing=true;cur=[pt(x,y)];strokes.push(cur);redraw();
 }
 function move(id,x,y){if(!drawing||id!==aid)return;cur.push(pt(x,y));redraw()}
@@ -348,12 +368,12 @@ $('grade').onclick=()=>{
   if(drawing)return;
   const s=score();
   if(s===null){setFb(()=>t('need'));return}
-  show=true;scored=true;
+  show=true;scored=true;$('help').textContent='';
   if(!done||s>best){best=s;snap=strokes.map(x=>x.slice());done=true}
   updNext();$('score').textContent=best;setFb(()=>s+t('pts')+comment(s));redraw();
 };
-$('undo').onclick=()=>{strokes.pop();show=false;scored=false;setFb(null);redraw()};
-$('retry').onclick=()=>{strokes=[];show=false;scored=false;setFb(null);redraw()};
+$('undo').onclick=()=>{strokes.pop();show=false;scored=false;setFb(null);$('help').textContent=t('help_'+level);redraw()};
+$('retry').onclick=()=>{strokes=[];show=false;scored=false;setFb(null);$('help').textContent=t('help_'+level);redraw()};
 $('nextQ').onclick=next;
 $('hint').onclick=()=>{hint=!hint;$('hint').classList.toggle('on',hint);redraw()};
 
