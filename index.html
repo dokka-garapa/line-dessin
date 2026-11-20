@@ -52,6 +52,8 @@ canvas{display:block;margin:0 auto;width:min(100%,max(240px,calc(100vh - 380px))
 .rvc{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left}
 .rvc .mute{margin:2px 0 0}
 .rvc .big{flex:none;text-align:right}
+#credit{margin-top:160px;padding-bottom:64px;text-align:center;font-size:12px;color:var(--mute);line-height:1.8}
+#credit a{color:var(--acc);font-weight:700;text-decoration:none}
 html[lang="fr"] body{font-size:15px}
 html[lang="fr"] h1{font-size:23px}
 html[lang="fr"] h1 small{font-size:12px}
@@ -118,6 +120,7 @@ html[lang="fr"] .rvt{font-size:16px}
   <div class="row"><button id="again" data-t="again">もう一度挑戦</button><button id="totitle" data-t="totitle">タイトルへ</button></div>
 </section>
 </main>
+<footer id="credit"><div>© 2026 <span data-t="cname">ふっふ (Fuffu)</span></div><div><span data-t="contact">お問い合わせ: </span><a href="https://x.com/dokka_garapa" target="_blank" rel="noopener">X @dokka_garapa</a></div></footer>
 
 <script>
 const W=400,H=320,NQ=5;   // 描画スペースは横長（400×320）。何問ごとに振り返りを出すか
@@ -140,7 +143,7 @@ help_e:'赤(A)と水色(B)の間の線を描こう',help_m:'赤(A)と水色(B)�
 hint:'ヒント',undo:'1本消す',retry:'全部消す',grade:'採点',next:'次の問題',
 need:'線を描いてから採点してね',pts:'点　',results:'まとめを見る',play:'再生',stop:'停止',again:'もう一度挑戦',totitle:'タイトルへ',
 rv_title:'まとめ（5問の振り返り）',rv_avg:'5問の平均点',rv_leg:'赤=A　水色=B　黒=あなたの線　緑の点線=正解',
-c90:'お見事！ほぼ正解の位置です',c75:'いい感じに間が取れています',c50:'惜しい！もう一度見直してみよう',c0:'ずいぶん外れました。線の位置を見直してみよう'},
+c90:'お見事！ほぼ正解の位置です',c75:'いい感じに間が取れています',c50:'惜しい！もう一度見直してみよう',c0:'ずいぶん外れました。線の位置を見直してみよう',cname:'ふっふ (Fuffu)',contact:'お問い合わせ: '},
 en:{title:'Animator "Line-Splitting" Game · Inbetweening Experience',sub:'Anime Inbetweening Training',
 intro:'Practice drawing the line that lies between the red line (A) and the light-blue line (B). Draw it, then press "Grade" to get your score. There is no time limit. Questions come in sets of 5. In the review, you can check your work as an animation.',
 lv:'Level',lv_e:'Beginner',lv_m:'Intermediate',lv_h:'Advanced',ld_e:'Straight lines & simple curves',ld_m:'Curves & lines with corners',ld_h:'Two connected lines',
@@ -151,7 +154,7 @@ help_e:'Draw the line between red (A) and light-blue (B).',help_m:'Draw the line
 hint:'Hint',undo:'Undo stroke',retry:'Clear all',grade:'Grade',next:'Next',
 need:'Draw a line first, then grade.',pts:' pts  ',results:'See review',play:'Play',stop:'Stop',again:'Play again',totitle:'Title',
 rv_title:'Review of 5 questions',rv_avg:'Average of 5 questions',rv_leg:'Red = A, Light blue = B, Black = your line, Green dashed = answer',
-c90:'Excellent! Almost exactly right.',c75:'Nice, good spacing.',c50:'Close! Take another look.',c0:'Far off. Check the position of the line again.'},
+c90:'Excellent! Almost exactly right.',c75:'Nice, good spacing.',c50:'Close! Take another look.',c0:'Far off. Check the position of the line again.',cname:'Fuffu',contact:'Contact: '},
 ko:{title:'애니메이터 "선 나누기" 게임 · 인비트윈 체험',sub:'애니메이션 인비트윈 트레이닝',
 intro:'빨간 선(A)과 하늘색 선(B)의 "사이" 선을 그리는 연습입니다. 그린 뒤 "채점" 버튼으로 점수를 확인하세요. 시간 제한은 없습니다. 5문제씩 출제됩니다. 돌아보기에서는 애니메이션으로 확인할 수 있습니다.',
 lv:'레벨',lv_e:'초급',lv_m:'중급',lv_h:'상급',ld_e:'직선·간단한 곡선',ld_m:'곡선·각진 선',ld_h:'이어진 선 2개',
@@ -162,7 +165,7 @@ help_e:'빨강(A)과 하늘색(B) 사이의 선을 그려 보세요',help_m:'빨
 hint:'힌트',undo:'한 획 지우기',retry:'모두 지우기',grade:'채점',next:'다음 문제',
 need:'선을 그린 뒤에 채점해 주세요',pts:'점  ',results:'결과 보기',play:'재생',stop:'정지',again:'다시 도전',totitle:'타이틀로',
 rv_title:'정리 (5문제 돌아보기)',rv_avg:'5문제 평균 점수',rv_leg:'빨강=A  하늘색=B  검정=내 선  초록 점선=정답',
-c90:'훌륭해요! 거의 정확한 위치예요',c75:'사이를 잘 잡았어요',c50:'아깝네요! 다시 한번 살펴보세요',c0:'많이 벗어났어요. 선의 위치를 다시 확인해 보세요'},
+c90:'훌륭해요! 거의 정확한 위치예요',c75:'사이를 잘 잡았어요',c50:'아깝네요! 다시 한번 살펴보세요',c0:'많이 벗어났어요. 선의 위치를 다시 확인해 보세요',cname:'Fuffu',contact:'문의: '},
 zh:{title:'动画师"分线"游戏 · 中间画体验',sub:'动画 中间画训练',
 intro:'练习画出红线（A）与浅蓝线（B）"之间"的线。画完后按"评分"按钮打分。没有时间限制。每组出 5 道题。在回顾中可以以动画形式查看。',
 lv:'难度',lv_e:'初级',lv_m:'中级',lv_h:'高级',ld_e:'直线・简单曲线',ld_m:'曲线・带转角的线',ld_h:'两条相连的线',
@@ -173,7 +176,7 @@ help_e:'画出红(A)与浅蓝(B)之间的线',help_m:'画出红(A)与浅蓝(B)�
 hint:'提示',undo:'擦掉一笔',retry:'全部擦掉',grade:'评分',next:'下一题',
 need:'请先画线再评分',pts:'分  ',results:'查看总结',play:'播放',stop:'停止',again:'再挑战一次',totitle:'回到标题',
 rv_title:'总结（5题回顾）',rv_avg:'5题平均分',rv_leg:'红=A　浅蓝=B　黑=你的线　绿色虚线=正确答案',
-c90:'太棒了！几乎完全正确',c75:'间隔把握得不错',c50:'可惜！再看一看吧',c0:'偏差较大，再检查一下线的位置吧'},
+c90:'太棒了！几乎完全正确',c75:'间隔把握得不错',c50:'可惜！再看一看吧',c0:'偏差较大，再检查一下线的位置吧',cname:'Fuffu',contact:'联系方式：'},
 fr:{title:'Jeu de l’animateur « Découpe de ligne » · Découverte de l’intercalation',sub:'Entraînement à l’intercalation en animation',
 intro:'Entraînez-vous à tracer la ligne située entre la ligne rouge (A) et la ligne bleu clair (B). Une fois tracée, appuyez sur « Noter » pour obtenir votre score. Il n’y a pas de limite de temps. Les questions sont proposées par séries de 5. Dans le bilan, vous pouvez vérifier votre travail sous forme d’animation.',
 lv:'Niveau',lv_e:'Débutant',lv_m:'Intermédiaire',lv_h:'Avancé',ld_e:'Lignes droites et courbes simples',ld_m:'Courbes et lignes à angles',ld_h:'Deux lignes reliées',
@@ -184,7 +187,7 @@ help_e:'Tracez la ligne entre le rouge (A) et le bleu clair (B).',help_m:'Tracez
 hint:'Indice',undo:'Effacer un trait',retry:'Tout effacer',grade:'Noter',next:'Suivant',
 need:'Tracez d’abord une ligne, puis notez.',pts:' pts  ',results:'Voir le bilan',play:'Lire',stop:'Arrêter',again:'Rejouer',totitle:'Titre',
 rv_title:'Bilan des 5 questions',rv_avg:'Moyenne des 5 questions',rv_leg:'Rouge = A, Bleu clair = B, Noir = votre ligne, Pointillés verts = réponse',
-c90:'Excellent ! Presque exact.',c75:'Bien, bon espacement.',c50:'Presque ! Regardez encore.',c0:'Très éloigné. Revérifiez la position de la ligne.'},
+c90:'Excellent ! Presque exact.',c75:'Bien, bon espacement.',c50:'Presque ! Regardez encore.',c0:'Très éloigné. Revérifiez la position de la ligne.',cname:'Fuffu',contact:'Contact : '},
 es:{title:'Juego del animador «División de línea» · Experiencia de intercalación',sub:'Entrenamiento de intercalación en animación',
 intro:'Practica dibujando la línea que queda entre la línea roja (A) y la línea azul claro (B). Dibújala y pulsa «Calificar» para ver tu puntuación. No hay límite de tiempo. Las preguntas vienen en series de 5. En el repaso puedes comprobar tu trabajo como animación.',
 lv:'Nivel',lv_e:'Principiante',lv_m:'Intermedio',lv_h:'Avanzado',ld_e:'Líneas rectas y curvas simples',ld_m:'Curvas y líneas con esquinas',ld_h:'Dos líneas conectadas',
@@ -195,7 +198,7 @@ help_e:'Dibuja la línea entre el rojo (A) y el azul claro (B).',help_m:'Dibuja 
 hint:'Pista',undo:'Borrar un trazo',retry:'Borrar todo',grade:'Calificar',next:'Siguiente',
 need:'Dibuja una línea primero y luego califica.',pts:' pts  ',results:'Ver repaso',play:'Reproducir',stop:'Detener',again:'Jugar de nuevo',totitle:'Título',
 rv_title:'Repaso de las 5 preguntas',rv_avg:'Promedio de las 5 preguntas',rv_leg:'Rojo = A, Azul claro = B, Negro = tu línea, Verde discontinuo = respuesta',
-c90:'¡Excelente! Casi exacto.',c75:'Bien, buena separación.',c50:'¡Cerca! Échale otro vistazo.',c0:'Muy desviado. Revisa de nuevo la posición de la línea.'},
+c90:'¡Excelente! Casi exacto.',c75:'Bien, buena separación.',c50:'¡Cerca! Échale otro vistazo.',c0:'Muy desviado. Revisa de nuevo la posición de la línea.',cname:'Fuffu',contact:'Contacto: '},
 ar:{title:'لعبة المحرّك «تقسيم الخطوط» · تجربة الرسم البيني',sub:'تدريب على الرسم البيني في الأنيميشن',
 intro:'تدرّب على رسم الخط الواقع بين الخط الأحمر (A) والخط الأزرق الفاتح (B). بعد الرسم اضغط «تقييم» للحصول على درجتك. لا يوجد حد زمني. تُعرض الأسئلة في مجموعات من 5. في المراجعة يمكنك التحقق من عملك على شكل أنيميشن.',
 lv:'المستوى',lv_e:'مبتدئ',lv_m:'متوسط',lv_h:'متقدم',ld_e:'خطوط مستقيمة ومنحنيات بسيطة',ld_m:'منحنيات وخطوط ذات زوايا',ld_h:'خطان متصلان',
@@ -206,7 +209,7 @@ help_e:'ارسم الخط الواقع بين الأحمر (A) والأزرق ا
 hint:'تلميح',undo:'مسح ضربة',retry:'مسح الكل',grade:'تقييم',next:'التالي',
 need:'ارسم خطًا أولًا ثم قيّم.',pts:' نقطة  ',results:'عرض المراجعة',play:'تشغيل',stop:'إيقاف',again:'العب مجددًا',totitle:'العنوان',
 rv_title:'مراجعة الأسئلة الخمسة',rv_avg:'متوسط الأسئلة الخمسة',rv_leg:'أحمر = A، أزرق فاتح = B، أسود = خطك، أخضر متقطع = الإجابة',
-c90:'ممتاز! الموضع شبه صحيح تمامًا',c75:'تقسيم جيد',c50:'قريب! أعد النظر مرة أخرى',c0:'بعيد جدًا. راجع موضع الخط مرة أخرى'},
+c90:'ممتاز! الموضع شبه صحيح تمامًا',c75:'تقسيم جيد',c50:'قريب! أعد النظر مرة أخرى',c0:'بعيد جدًا. راجع موضع الخط مرة أخرى',cname:'Fuffu',contact:'للتواصل: '},
 th:{title:'เกม "แบ่งเส้น" ของอนิเมเตอร์ · ประสบการณ์อินบีทวีน',sub:'ฝึกอินบีทวีนแอนิเมชัน',
 intro:'ฝึกวาดเส้นที่อยู่ "ระหว่าง" เส้นสีแดง (A) กับเส้นสีฟ้า (B) วาดเสร็จแล้วกดปุ่ม "ให้คะแนน" เพื่อตรวจคะแนน ไม่มีจำกัดเวลา ออกโจทย์ครั้งละ 5 ข้อ ในหน้าสรุปผลสามารถตรวจดูเป็นแอนิเมชันได้',
 lv:'ระดับ',lv_e:'ระดับต้น',lv_m:'ระดับกลาง',lv_h:'ระดับสูง',ld_e:'เส้นตรง·เส้นโค้งง่าย ๆ',ld_m:'เส้นโค้ง·เส้นที่มีมุม',ld_h:'เส้นที่เชื่อมกัน 2 เส้น',
@@ -217,7 +220,7 @@ help_e:'วาดเส้นระหว่างสีแดง (A) กับ�
 hint:'คำใบ้',undo:'ลบ 1 เส้น',retry:'ลบทั้งหมด',grade:'ให้คะแนน',next:'ข้อต่อไป',
 need:'วาดเส้นก่อนแล้วค่อยให้คะแนนนะ',pts:' คะแนน  ',results:'ดูสรุปผล',play:'เล่น',stop:'หยุด',again:'ลองอีกครั้ง',totitle:'กลับหน้าแรก',
 rv_title:'สรุปผล (ทบทวน 5 ข้อ)',rv_avg:'คะแนนเฉลี่ยของ 5 ข้อ',rv_leg:'แดง = A　ฟ้า = B　ดำ = เส้นของคุณ　เขียวประ = คำตอบที่ถูกต้อง',
-c90:'ยอดเยี่ยม! ตำแหน่งเกือบถูกต้องเป๊ะเลย',c75:'ดีมาก แบ่งระยะได้ดี',c50:'น่าเสียดาย! ลองดูอีกครั้งนะ',c0:'เบี่ยงไปเยอะเลย ลองตรวจตำแหน่งของเส้นอีกครั้ง'}};
+c90:'ยอดเยี่ยม! ตำแหน่งเกือบถูกต้องเป๊ะเลย',c75:'ดีมาก แบ่งระยะได้ดี',c50:'น่าเสียดาย! ลองดูอีกครั้งนะ',c0:'เบี่ยงไปเยอะเลย ลองตรวจตำแหน่งของเส้นอีกครั้ง',cname:'Fuffu',contact:'ติดต่อ: '}};
 const LANGATTR={ja:'ja',en:'en',ko:'ko',zh:'zh-Hans',fr:'fr',es:'es',ar:'ar',th:'th'};
 let lang=(()=>{try{const v=localStorage.getItem('lang');if(v&&I18N[v])return v}catch(e){}return'ja'})(),fbf=null;
 const t=k=>I18N[lang][k];
